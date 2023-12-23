@@ -1,0 +1,9 @@
+scary_cave_ambience.1 - https://freesound.org/people/djfroyd/sounds/370766/
+scary_cave_ambience.2 - https://freesound.org/people/Poyekhali/sounds/254365/
+scary_cave_ambience.9 - https://opengameart.org/content/scary-echoey-horn-esque-sound
+scary_cave_ambience.10,11 https://opengameart.org/users/cadere-sounds
+
+music.1 - Nene https://opengameart.org/content/night-of-the-streets-horrorsuspense
+music.2 - Augmentality (Brandon Morris) https://opengameart.org/content/creepy-forest-f
+music.3 - qubodup https://opengameart.org/content/dark-ambience-loop
+music.4 - Michael Klier https://opengameart.org/content/haunted-woods-horror-drone

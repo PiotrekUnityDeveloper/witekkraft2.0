@@ -1,0 +1,2 @@
+Original code GPL V3 by Oil_boi - https://forum.minetest.net/viewtopic.php?t=24490
+Forked by StarNinjas
