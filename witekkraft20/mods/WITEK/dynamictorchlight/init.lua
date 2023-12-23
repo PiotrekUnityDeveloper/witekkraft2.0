@@ -31,7 +31,7 @@ local function wields_torch(player)
 	if not item then
 		return false
 	end
-	return item:get_name() == "default:torch"
+	return string.find(item:get_name(), "torch")
 end
 
 local function wielded_torch(name)
