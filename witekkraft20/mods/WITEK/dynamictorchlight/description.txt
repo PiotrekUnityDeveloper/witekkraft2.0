@@ -1,0 +1,1 @@
+emits a light whenever you hold a torch in your hand
