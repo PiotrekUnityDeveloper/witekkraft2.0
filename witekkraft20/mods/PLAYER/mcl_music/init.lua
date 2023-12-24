@@ -16,9 +16,21 @@ local hailing_forest = "Jester-Hailing_Forest"
 local lonely_blossom = "exhale_and_tim_unwin-lonely_blossom"
 local valley_of_ghosts = "exhale_and_tim_unwin-valley_of_ghosts"
 local farmer = "exhale_and_tim_unwin-farmer"
+-- minecraft
+local danny = "Danny"
+local dryhands = "Dry_Hands"
+local far = "Far"
+local haggstorm = "Haggstorm"
+local key = "Key"
+local livingmice = "Living_Mice"
+local miceonvenus = "Mice_On_Venus"
+local minecraft = "Minecraft"
+local subwooferlullaby = "Subwoofer_Lullaby"
+local sweden = "Sweden"
+local wethands = "Wet_Hands"
 
 local dimension_to_base_track = {
-	["overworld"]	= {pianowtune, never_grow_up, flock_of_one, gift, hailing_forest, lonely_blossom, farmer},
+	["overworld"]	= {pianowtune, never_grow_up, flock_of_one, gift, hailing_forest, lonely_blossom, farmer, danny, dryhands, far, haggstorm, key, livingmice, miceonvenus, minecraft, subwooferlullaby, sweden, wethands},
 	["nether"]		= {nether_tune, valley_of_ghosts},
 	["end"]			= {end_tune},
 	["mining"]		= {odd_block},
