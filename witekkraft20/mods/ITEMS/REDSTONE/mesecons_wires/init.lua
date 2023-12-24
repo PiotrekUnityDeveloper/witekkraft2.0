@@ -205,14 +205,14 @@ local function register_wires()
 		-- Wire textures
 		local ratio_off = 128
 		local ratio_on = 192
-		local crossing_off = "(redstone_redstone_dust_dot.png^redstone_redstone_dust_line0.png^(redstone_redstone_dust_line1.png^[transformR90))^[colorize:#FF0000:"..ratio_off
-		local crossing_on = "(redstone_redstone_dust_dot.png^redstone_redstone_dust_line0.png^(redstone_redstone_dust_line1.png^[transformR90))^[colorize:#FF0000:"..ratio_on
-		local straight0_off = "redstone_redstone_dust_line0.png^[colorize:#FF0000:"..ratio_off
-		local straight0_on = "redstone_redstone_dust_line0.png^[colorize:#FF0000:"..ratio_on
-		local straight1_off = "redstone_redstone_dust_line0.png^[colorize:#FF0000:"..ratio_off
-		local straight1_on = "redstone_redstone_dust_line0.png^[colorize:#FF0000:"..ratio_on
-		local dot_off = "redstone_redstone_dust_dot.png^[colorize:#FF0000:"..ratio_off
-		local dot_on = "redstone_redstone_dust_dot.png^[colorize:#FF0000:"..ratio_on
+		local crossing_off = "(redstone_redstone_dust_dot.png^redstone_redstone_dust_line0.png^(redstone_redstone_dust_line1.png^[transformR90))^[colorize:#800000:"..ratio_off
+		local crossing_on = "(redstone_redstone_dust_dot.png^redstone_redstone_dust_line0.png^(redstone_redstone_dust_line1.png^[transformR90))^[colorize:#FF6969:"..ratio_on
+		local straight0_off = "redstone_redstone_dust_line0.png^[colorize:#800000:"..ratio_off
+		local straight0_on = "redstone_redstone_dust_line0.png^[colorize:#FF6969:"..ratio_on
+		local straight1_off = "redstone_redstone_dust_line0.png^[colorize:#800000:"..ratio_off
+		local straight1_on = "redstone_redstone_dust_line0.png^[colorize:#FF6969:"..ratio_on
+		local dot_off = "redstone_redstone_dust_dot.png^[colorize:#800000:"..ratio_off
+		local dot_on = "redstone_redstone_dust_dot.png^[colorize:#FF6969:"..ratio_on
 
 		local tiles_off, tiles_on
 
