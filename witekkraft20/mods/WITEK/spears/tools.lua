@@ -63,35 +63,39 @@ if minetest.get_modpath("pigiron") then
 		spears_register_spear('iron', 'Iron', 5.5, 30, 'pigiron:iron_ingot')
 	end
 	if not DISABLE_STEEL_SPEAR then
-		spears_register_spear('steel', 'Steel', 6, 35, 'default:steel_ingot')
+		spears_register_spear('steel', 'Steel', 6, 35, 'mineclone:steel_ingot')
 	end
 	if not DISABLE_COPPER_SPEAR then
-		spears_register_spear('copper', 'Copper', 4.8, 30, 'default:copper_ingot')
+		spears_register_spear('copper', 'Copper', 4.8, 30, 'mineclone:copper_ingot')
 	end
 	if not DISABLE_BRONZE_SPEAR then
-		spears_register_spear('bronze', 'Bronze', 5.5, 35, 'default:bronze_ingot')
+		spears_register_spear('bronze', 'Bronze', 5.5, 35, 'mineclone:bronze_ingot')
 	end
 else
 	if not DISABLE_STEEL_SPEAR then
-		spears_register_spear('steel', 'Steel', 6, 30, 'default:steel_ingot')
+		spears_register_spear('steel', 'Steel', 6, 30, 'mineclone:steel_ingot')
 	end
 	if not DISABLE_COPPER_SPEAR then
-		spears_register_spear('copper', 'Copper', 5, 30, 'default:copper_ingot')
+		spears_register_spear('copper', 'Copper', 5, 30, 'mineclone:copper_ingot')
 	end
 	if not DISABLE_BRONZE_SPEAR then
-		spears_register_spear('bronze', 'Bronze', 6, 35, 'default:bronze_ingot')
+		spears_register_spear('bronze', 'Bronze', 6, 35, 'mineclone:bronze_ingot')
 	end
 end
 
 
 if not DISABLE_OBSIDIAN_SPEAR then
-	spears_register_spear('obsidian', 'Obsidian', 8, 30, 'default:obsidian')
+	spears_register_spear('obsidian', 'Obsidian', 8, 30, 'mineclone:obsidian')
 end
 
 if not DISABLE_DIAMOND_SPEAR then
-	spears_register_spear('diamond', 'Diamond', 8, 40, 'default:diamond')
+	spears_register_spear('diamond', 'Diamond', 8, 40, 'mineclone:diamond')
 end
 
 if not DISABLE_GOLD_SPEAR then
-	spears_register_spear('gold', 'Golden', 5, 40, 'default:gold_ingot')
+	spears_register_spear('gold', 'Golden', 5, 40, 'mineclone:gold_ingot')
+end
+
+if not DISABLE_IRON_SPEAR then
+		spears_register_spear('iron', 'Iron', 5.5, 30, 'mineclone:iron_ingot')
 end
