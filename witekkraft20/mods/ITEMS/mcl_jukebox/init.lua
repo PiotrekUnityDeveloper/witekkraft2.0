@@ -104,8 +104,9 @@ local function play_record(pos, itemstack, player)
 			active_tracks[cname] = nil
 		end
 		active_tracks[cname] = minetest.sound_play(mcl_jukebox.registered_records[name][5], {
-			to_player = cname,
 			gain = 1,
+			pos = pos,
+			max_hear_distance = 32,
 		})
 		now_playing(player, name)
 		return true
@@ -230,21 +231,23 @@ minetest.register_craft({
 	burntime = 15,
 })
 
-mcl_jukebox.register_record("The Evil Sister (Jordach's Mix)", "SoundHelix", "13", "mcl_jukebox_record_13.png", "mcl_jukebox_track_1")
-mcl_jukebox.register_record("The Energetic Rat (Jordach's Mix)", "SoundHelix", "wait", "mcl_jukebox_record_wait.png", "mcl_jukebox_track_2")
-mcl_jukebox.register_record("Eastern Feeling", "Jordach", "blocks", "mcl_jukebox_record_blocks.png", "mcl_jukebox_track_3")
-mcl_jukebox.register_record("Minetest", "Jordach", "far", "mcl_jukebox_record_far.png", "mcl_jukebox_track_4")
-mcl_jukebox.register_record("Soaring over the sea", "mactonite", "chirp", "mcl_jukebox_record_chirp.png", "mcl_jukebox_track_5")
-mcl_jukebox.register_record("Winter Feeling", "Tom Peter", "strad", "mcl_jukebox_record_strad.png", "mcl_jukebox_track_6")
-mcl_jukebox.register_record("Synthgroove (Jordach's Mix)", "HeroOfTheWinds", "mellohi", "mcl_jukebox_record_mellohi.png", "mcl_jukebox_track_7")
-mcl_jukebox.register_record("The Clueless Frog (Jordach's Mix)", "SoundHelix", "mall", "mcl_jukebox_record_mall.png", "mcl_jukebox_track_8")
+mcl_jukebox.register_record("Wypierdalaj zjebie", "zajebanyChuj", "zjeb", "mcl_jukebox_record_13.png", "mcl_jukebox_track_1")
+mcl_jukebox.register_record("Horimiya Ending Theme", "anime musiCC", "hori", "mcl_jukebox_record_wait.png", "mcl_jukebox_track_2")
+mcl_jukebox.register_record("Ruski", "cyka_blyat", "ruski", "mcl_jukebox_record_blocks.png", "mcl_jukebox_track_3")
+mcl_jukebox.register_record("Witkstorm", "zajebanyChuj", "witkstorm", "mcl_jukebox_record_far.png", "mcl_jukebox_track_4")
+mcl_jukebox.register_record("Banned You Off Existence", "kossakowskiJunior", "pianoBan", "mcl_jukebox_record_chirp.png", "mcl_jukebox_track_5")
+mcl_jukebox.register_record("Bandit", "juiceRemixer", "bandit", "mcl_jukebox_record_strad.png", "mcl_jukebox_track_6")
+mcl_jukebox.register_record("Acoustic Guitar Theme", "kossakowski", "acousticguitartheme", "mcl_jukebox_record_mellohi.png", "mcl_jukebox_track_7")
+mcl_jukebox.register_record("Calm Wave", "kossakowski", "calm", "mcl_jukebox_record_mall.png", "mcl_jukebox_track_8")
+mcl_jukebox.register_record("Tengi Rozpierdol", "kossakowski, witekusrapuss", "rozpierdol", "mcl_jukebox_record_mellohi.png", "mcl_jukebox_track_9")
 
 --add backward compatibility
-minetest.register_alias("mcl_jukebox:record_1", "mcl_jukebox:record_13")
-minetest.register_alias("mcl_jukebox:record_2", "mcl_jukebox:record_wait")
-minetest.register_alias("mcl_jukebox:record_3", "mcl_jukebox:record_blocks")
-minetest.register_alias("mcl_jukebox:record_4", "mcl_jukebox:record_far")
-minetest.register_alias("mcl_jukebox:record_5", "mcl_jukebox:record_chirp")
-minetest.register_alias("mcl_jukebox:record_6", "mcl_jukebox:record_strad")
-minetest.register_alias("mcl_jukebox:record_7", "mcl_jukebox:record_mellohi")
-minetest.register_alias("mcl_jukebox:record_8", "mcl_jukebox:record_mall")
+minetest.register_alias("mcl_jukebox:record_1", "mcl_jukebox:record_zjeb")
+minetest.register_alias("mcl_jukebox:record_2", "mcl_jukebox:record_hori")
+minetest.register_alias("mcl_jukebox:record_3", "mcl_jukebox:record_ruski")
+minetest.register_alias("mcl_jukebox:record_4", "mcl_jukebox:record_witkstorm")
+minetest.register_alias("mcl_jukebox:record_5", "mcl_jukebox:record_pianoBan")
+minetest.register_alias("mcl_jukebox:record_6", "mcl_jukebox:record_bandit")
+minetest.register_alias("mcl_jukebox:record_7", "mcl_jukebox:record_acousticguitartheme")
+minetest.register_alias("mcl_jukebox:record_8", "mcl_jukebox:record_calm")
+minetest.register_alias("mcl_jukebox:record_9", "mcl_jukebox:record_rozpierdol")

@@ -177,7 +177,7 @@ minetest.register_node("mcl_radiobox:radiobox", {
 		effector = {
 			action_on = function(pos, node)
 				local meta = minetest.get_meta(pos)
-				minetest.debug("siema")
+				--minetest.debug("siema")
 				if meta:get_string("isenabled") == tostring(false) then
 					play_record(pos, nil, nil)
 					meta:set_string("wasenabled", "true")
@@ -225,7 +225,9 @@ minetest.register_node("mcl_radiobox:radiobox", {
 		local meta = minetest.get_meta(pos)
 		
 		if meta:get_string("isenabled") == tostring(true) then
-				minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+				if active_tracks[pos.x .. pos.y .. pos.z] ~= nil then
+					minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+				end
 				meta:set_int("currenttrack", -1)
 				play_record(pos, itemstack, clicker)
 				meta:set_string("wasenabled", "true")
@@ -279,7 +281,9 @@ minetest.register_node("mcl_radiobox:radiobox", {
 		local meta2 = meta
 		meta:from_table(oldmetadata)
 		if meta2:get_string("wasenabled") == tostring(true) then
-			minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+			if active_tracks[pos.x .. pos.y .. pos.z] ~= nil then
+				minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+			end
 		end
 	end,
 	_mcl_blast_resistance = 10,
