@@ -26,8 +26,8 @@ local active_huds = {}
 -- Used to make sure that minetest.after only applies to the latest HUD change event
 local hud_sequence_numbers = {}
 
-function mcl_radiobox.register_record(title, author, identifier, image, sound)
-	mcl_radiobox.registered_records["radio"..identifier] = {title, author, identifier, image, sound}
+function mcl_radiobox.register_record(title, author, identifier, image, sound, length)
+	mcl_radiobox.registered_records["radio"..identifier] = {title, author, identifier, image, sound, length}
 	--local entryname = S("Music Disc")
 	--local longdesc = S("A music disc holds a single music track which can be used in a radiobox to play music.")
 	--local usagehelp = S("Place a music disc into an empty radiobox to play the music. Use the radiobox again to retrieve the music disc. The music can only be heard by you, not by other players.")
@@ -99,18 +99,40 @@ end)
 minetest.register_craft({
 	output = "mcl_radiobox:radiobox",
 	recipe = {
-		{"mineclone:iron_block", "mineclone:iron_block", "mineclone:iron_block"},
-		{"mineclone:iron_block", "mcl_core:diamond", "mineclone:iron_block"},
-		{"mineclone:iron_block", "mineclone:iron_block", "mineclone:iron_block"},
+		{"mineclone:ironblock", "mineclone:ironblock", "mineclone:ironblock"},
+		{"mineclone:ironblock", "mcl_core:diamond", "mineclone:ironblock"},
+		{"mineclone:ironblock", "mineclone:ironblock", "mineclone:ironblock"},
 	}
 })
 
-local function play_record(pos, itemstack, player)
+local globalrand = 0;
+--local localmeta = minetest.get_meta(pos)
+
+local function replay_random_record(pos, randomNumber)
+	local meta = minetest.get_meta(pos)
+	
+	if randomNumber ~= globalrand then
+		return
+	end
+		
+	if meta:get_string("isenabled") == tostring(true) then
+		if active_tracks[pos.x .. pos.y .. pos.z] ~= nil then
+			minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+		end
+		meta:set_int("currenttrack", -1)
+		play_record(pos, nil, nil)
+		meta:set_string("wasenabled", "true")
+		meta:set_string("isenabled", "true")
+		now_playing(find_nearest_player(pos), meta:get_string("currentname"))
+	end
+end
+
+function play_record(pos, itemstack, player)
 	local meta = minetest.get_meta(pos)
 	
 	--local item_name = itemstack:get_name()
 	local nexttrack = "radio"
-	local nexttracknumber = math.random(1, 7)
+	local nexttracknumber = math.random(1, 17)
 	--local cname = player:get_player_name()
 	
 	if meta:get_int("currenttrack") ~= -1 then
@@ -120,7 +142,14 @@ local function play_record(pos, itemstack, player)
 			pos = pos,
 			gain = 1,
 			max_hear_distance = 16,
+			loop = false,
 		})
+		
+		globalrand = math.random(1e11, 1e12 - 1)
+		minetest.debug(tostring(mcl_radiobox.registered_records[nexttrack .. meta:get_int("currenttrack")][6] - 1))
+		minetest.after(mcl_radiobox.registered_records[nexttrack .. meta:get_int("currenttrack")][6] - 1, function()
+			replay_random_record(pos, globalrand)
+		end)
 	else
 		meta:set_string("currentname", nexttrack .. nexttracknumber)
 		meta:set_int("currenttrack", nexttracknumber)
@@ -128,7 +157,14 @@ local function play_record(pos, itemstack, player)
 			pos = pos,
 			gain = 1,
 			max_hear_distance = 16,
+			loop = false,
 		})
+		
+		globalrand = math.random(1e11, 1e12 - 1)
+		minetest.debug(tostring(mcl_radiobox.registered_records[nexttrack .. nexttracknumber][6] - 1))
+		minetest.after(mcl_radiobox.registered_records[nexttrack .. nexttracknumber][6] - 1, function()
+			replay_random_record(pos, globalrand)
+		end)
 	end
 	return false
 end
@@ -188,7 +224,9 @@ minetest.register_node("mcl_radiobox:radiobox", {
 			action_off = function(pos, node)
 				local meta = minetest.get_meta(pos)
 				if meta:get_string("isenabled") == tostring(true) then
-					minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+					if active_tracks[pos.x .. pos.y .. pos.z] ~= nil then
+						minetest.sound_stop(active_tracks[pos.x .. pos.y .. pos.z])
+					end
 					meta:set_string("isenabled", "false")
 				end
 			end,
@@ -307,23 +345,23 @@ local function table_contains(table, value)
     return false
 end
 
-mcl_radiobox.register_record("Radio Podcast - Witek", "zajebSie.FM", "1", "mcl_radiobox_record_13.png", "radio1")
-mcl_radiobox.register_record("EREMEFEFENEMEN", "zajebSie.FM", "2", "mcl_radiobox_record_wait.png", "radio2")
-mcl_radiobox.register_record("JOU JOU JOU WIDZOWIE", "zajebSie.FM", "3", "mcl_radiobox_record_blocks.png", "radio3")
-mcl_radiobox.register_record("Zapraszamy do kolejnej audycji audio", "zajebSie.FM", "4", "mcl_radiobox_record_far.png", "radio4")
-mcl_radiobox.register_record("AKHEM - radio zajebSie.FM originals", "zajebSie.FM", "5", "mcl_radiobox_record_chirp.png", "radio5")
-mcl_radiobox.register_record("zapraszamy na aud. Tengi Rozpierdol", "zajebSie.FM", "6", "mcl_radiobox_record_strad.png", "radio6")
-mcl_radiobox.register_record("Pianino wielki talent witka (zupka chinska)", "zajebSie.FM", "7", "mcl_radiobox_record_mellohi.png", "radio7")
-mcl_radiobox.register_record("najdojebansza pioseneczka", "zajebSie.FM", "8", "mcl_radiobox_record_mall.png", "radio8")
-mcl_radiobox.register_record("podcast - i tak to nie bendzie kurwa slychac", "zajebSie.FM", "9", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio9")
-mcl_radiobox.register_record("Tomasz Kowalski - jak wychowac dziecko?", "zajebSie.FM", "10", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio10")
-mcl_radiobox.register_record("Tomasz Kowalski - jak wychowac dzieco CZ.2 kontynuacja", "zajebSie.FM", "11", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio11")
-mcl_radiobox.register_record("kazanie", "zajebSie.FM", "12", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio12")
-mcl_radiobox.register_record("kolejna audycja - witek gosc radia (POLYKANIE DILDO)", "zajebSie.FM", "13", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio13")
-mcl_radiobox.register_record("WITEK.AUDYTANT - polska Szkola (piotr)", "zajebSie.FM", "14", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio14")
-mcl_radiobox.register_record("5 letni piotrus", "zajebSie.FM", "15", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio15")
-mcl_radiobox.register_record("wpierdalanie obiadu podczas audycji - mocne papierosy", "zajebSie.FM", "16", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio16")
-mcl_radiobox.register_record("gadaj dalej kurwa", "zajebSie.FM", "17", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio17")
+mcl_radiobox.register_record("Radio Podcast - Witek", "zajebSie.FM", "1", "mcl_radiobox_record_13.png", "radio1", 86)
+mcl_radiobox.register_record("EREMEFEFENEMEN", "zajebSie.FM", "2", "mcl_radiobox_record_wait.png", "radio2", 193)
+mcl_radiobox.register_record("JOU JOU JOU WIDZOWIE", "zajebSie.FM", "3", "mcl_radiobox_record_blocks.png", "radio3", 129)
+mcl_radiobox.register_record("Zapraszamy do kolejnej audycji audio", "zajebSie.FM", "4", "mcl_radiobox_record_far.png", "radio4", 158)
+mcl_radiobox.register_record("AKHEM - radio zajebSie.FM originals", "zajebSie.FM", "5", "mcl_radiobox_record_chirp.png", "radio5", 24)
+mcl_radiobox.register_record("zapraszamy na aud. Tengi Rozpierdol", "zajebSie.FM", "6", "mcl_radiobox_record_strad.png", "radio6", 158)
+mcl_radiobox.register_record("Pianino wielki talent witka (zupka chinska)", "zajebSie.FM", "7", "mcl_radiobox_record_mellohi.png", "radio7", 150)
+mcl_radiobox.register_record("najdojebansza pioseneczka", "zajebSie.FM", "8", "mcl_radiobox_record_mall.png", "radio8", 167)
+mcl_radiobox.register_record("podcast - i tak to nie bendzie kurwa slychac", "zajebSie.FM", "9", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio9", 70)
+mcl_radiobox.register_record("Tomasz Kowalski - jak wychowac dziecko?", "zajebSie.FM", "10", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio10", 53)
+mcl_radiobox.register_record("Tomasz Kowalski - jak wychowac dzieco CZ.2 kontynuacja", "zajebSie.FM", "11", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio11", 147)
+mcl_radiobox.register_record("kazanie", "zajebSie.FM", "12", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio12", 147)
+mcl_radiobox.register_record("kolejna audycja - witek gosc radia (POLYKANIE DILDO)", "zajebSie.FM", "13", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio13", 129)
+mcl_radiobox.register_record("WITEK.AUDYTANT - polska Szkola (piotr)", "zajebSie.FM", "14", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio14", 266)
+mcl_radiobox.register_record("5 letni piotrus", "zajebSie.FM", "15", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio15", 103)
+mcl_radiobox.register_record("wpierdalanie obiadu podczas audycji - mocne papierosy", "zajebSie.FM", "16", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio16", 71)
+mcl_radiobox.register_record("gadaj dalej kurwa", "zajebSie.FM", "17", "rozpierdol", "mcl_radiobox_record_mellohi.png", "radio17", 17)
 
 
 --add backward compatibility
