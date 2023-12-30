@@ -92,7 +92,8 @@ minetest.register_tool("flashlight:flashlight_on", {
     tool_capabilities = {
 		damage_groups = { fleshy = 1 },
     },
-    groups = { flashlight = 1 },
+	--groups = {not_in_creative_inventory = 1},
+    groups = { flashlight = 1, not_in_creative_inventory = 1 },
     on_secondary_use = use_flashlight,
     on_place = use_flashlight,
     _alternate = "flashlight:flashlight",

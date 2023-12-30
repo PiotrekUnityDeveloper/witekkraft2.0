@@ -1,3 +1,7 @@
+local mod_target = minetest.get_modpath("mcl_target")
+
+local math = math
+
 function spears_throw (itemstack, player, pointed_thing)
 	local spear = itemstack:get_name() .. '_entity'
 	local player_pos = player:get_pos()
@@ -28,7 +32,7 @@ function spears_throw (itemstack, player, pointed_thing)
 		end
 	else -- Avoid hitting yourself and throw
 		local throw_speed = SPEARS_THROW_SPEED
-		while vector.distance(player_pos, throw_pos) < 1.2 do
+		while vector.distance(player_pos, throw_pos) < 1.5 do
 			throw_pos = vector.add(throw_pos, vector.multiply(direction, 0.1))
 		end
 		local player_vel = player:get_velocity()
@@ -91,7 +95,7 @@ function spears_set_entity(spear_type, base_damage, toughness)
 				local spearhead_pos = vector.add(pos, vector.multiply(direction, 0.5))
 				self.object:set_rotation({x = 0, y = yaw + math.pi/2, z = pitch})
 				-- Hit someone?
-				local objects_in_radius = minetest.get_objects_inside_radius(spearhead_pos, 0.6)
+				local objects_in_radius = minetest.get_objects_inside_radius(spearhead_pos, 2.2)
 				for _,object in ipairs(objects_in_radius) do
 					if object:get_luaentity() ~= self and object:get_armor_groups().fleshy then
 						local damage = (speed + base_damage)^1.15 - 20
@@ -106,6 +110,11 @@ function spears_set_entity(spear_type, base_damage, toughness)
 				-- Hit a node?
 				local node = minetest.get_node(spearhead_pos)
 				local check_node = spears_check_node(node.name)
+				
+				if node.name == "mcl_target:target_off" then
+					mcl_target.hit(spearhead_pos, 1) --10 redstone ticks
+				end
+				
 				if check_node == SPEARS_NODE_UNKNOWN then
 					self.object:remove()
 					minetest.add_item(pos, {name='spears:spear_' .. spear_type, wear = wear})

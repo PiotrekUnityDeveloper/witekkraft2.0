@@ -173,7 +173,7 @@ function ARROW_ENTITY.on_step(self, dtime)
 		if self._damage >= 9 and self._in_player == false then
 			minetest.add_particlespawner({
 				amount = 20,
-				time = .2,
+				time = .15,
 				minpos = vector.new(0,0,0),
 				maxpos = vector.new(0,0,0),
 				minvel = vector.new(-0.1,-0.1,-0.1),
