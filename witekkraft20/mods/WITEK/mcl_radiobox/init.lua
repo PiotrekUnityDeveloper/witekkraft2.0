@@ -132,7 +132,7 @@ function play_record(pos, itemstack, player)
 	
 	--local item_name = itemstack:get_name()
 	local nexttrack = "radio"
-	local nexttracknumber = math.random(1, 17)
+	local nexttracknumber = math.random(1, 35)
 	--minetest.debug("next track number: " .. nexttracknumber)
 	--local cname = player:get_player_name()
 	
@@ -373,7 +373,24 @@ mcl_radiobox.register_record("WITEK.AUDYTANT - polska Szkola (piotr)", "zajebSie
 mcl_radiobox.register_record("5 letni piotrus", "zajebSie.FM", "15", "mcl_radiobox_record_strad.png", "radio15", "103")
 mcl_radiobox.register_record("wpierdalanie obiadu podczas audycji - mocne papierosy", "zajebSie.FM", "16", "mcl_radiobox_record_strad.png", "radio16", "71")
 mcl_radiobox.register_record("gadaj dalej kurwa", "zajebSie.FM", "17", "mcl_radiobox_record_strad.png", "radio17", "17")
-
+mcl_radiobox.register_record("brat spiewa", "zajebSie.FM", "18", "mcl_radiobox_record_strad.png", "radio18", "126")
+mcl_radiobox.register_record("bra******** uzaleznienie dziecka", "zajebSie.FM", "19", "mcl_radiobox_record_strad.png", "radio19", "78")
+mcl_radiobox.register_record("chwasty jak ziolo", "zajebSie.FM", "20", "mcl_radiobox_record_strad.png", "radio20", "86")
+mcl_radiobox.register_record("ded end kold - hity i przeboj z witeczkiem zjebem!", "zajebSie.FM", "21", "mcl_radiobox_record_strad.png", "radio21", "90")
+mcl_radiobox.register_record("depreyjna_audycja_2024_bez_enerdzi_zrinka", "zajebSie.FM", "22", "mcl_radiobox_record_strad.png", "radio22", "118")
+mcl_radiobox.register_record("dzus world", "zajebSie.FM", "23", "mcl_radiobox_record_strad.png", "radio23", "206")
+mcl_radiobox.register_record("fimejl orgasm", "zajebSie.FM", "24", "mcl_radiobox_record_strad.png", "radio24", "65")
+mcl_radiobox.register_record("gaylight lepkiego witka", "zajebSie.FM", "25", "mcl_radiobox_record_strad.png", "radio25", "125")
+mcl_radiobox.register_record("witkowy chuj", "zajebSie.FM", "26", "mcl_radiobox_record_strad.png", "radio26", "6")
+mcl_radiobox.register_record("reklama", "zajebSie.FM", "27", "mcl_radiobox_record_strad.png", "radio27", "67")
+mcl_radiobox.register_record("pymonowy dzwon", "zajebSie.FM", "28", "mcl_radiobox_record_strad.png", "radio28", "82")
+mcl_radiobox.register_record("piotreczkowe1", "zajebSie.FM", "29", "mcl_radiobox_record_strad.png", "radio29", "83")
+mcl_radiobox.register_record("witkowe przeboje - numer 10", "zajebSie.FM", "30", "mcl_radiobox_record_strad.png", "radio30", "258")
+mcl_radiobox.register_record("rucham ci starego", "zajebSie.FM", "31", "mcl_radiobox_record_strad.png", "radio31", "82")
+mcl_radiobox.register_record("witek lubi stupki dzieci", "zajebSie.FM", "32", "mcl_radiobox_record_strad.png", "radio32", "17")
+mcl_radiobox.register_record("witek ma URODZINY!", "zajebSie.FM", "33", "mcl_radiobox_record_strad.png", "radio33", "80")
+mcl_radiobox.register_record("witkoweDrzewko", "zajebSie.FM", "34", "mcl_radiobox_record_strad.png", "radio34", "192")
+mcl_radiobox.register_record("witkoweDrzewko LIMITOWANA WERSJA EJ AJ", "zajebSie.FM", "35", "mcl_radiobox_record_strad.png", "radio35", "192")
 
 --add backward compatibility
 --[[
