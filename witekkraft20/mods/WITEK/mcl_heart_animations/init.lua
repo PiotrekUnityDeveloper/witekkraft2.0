@@ -110,6 +110,8 @@ minetest.register_on_player_hpchange(function(player, hp_change)
             minetest.after(0.15, function() flash_off(player) end)
             minetest.after(0.30, function() flash_on(player) end) --two   
             minetest.after(0.45, function() flash_off(player) end)
+			
+			reset_pos(player)
         else
             -- flash three times for getting hurt
             
@@ -123,6 +125,8 @@ minetest.register_on_player_hpchange(function(player, hp_change)
 
 			minetest.after(0.60, function() flash_on(player) end) --three
             minetest.after(0.75, function() flash_off(player) end)
+			-- player died, reset the hearts offset
+			reset_pos(player)
             
         end
     end
