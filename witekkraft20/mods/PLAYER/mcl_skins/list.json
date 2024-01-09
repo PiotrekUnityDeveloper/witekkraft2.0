@@ -48,6 +48,14 @@
 		"texture": "mcl_skins_eye_7.png"
 	},
 	{
+		"type": "eye",
+		"texture": "mcl_skins_eye_8.png"
+	},
+	{
+		"type": "eye",
+		"texture": "mcl_skins_eye_9.png"
+	},
+	{
 		"type": "mouth",
 		"texture": "mcl_skins_mouth_1.png",
 		"template1": true
