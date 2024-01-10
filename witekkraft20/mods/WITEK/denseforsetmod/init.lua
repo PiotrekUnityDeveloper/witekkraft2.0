@@ -12,6 +12,44 @@ local math = math
 
 --local mg_name = minetest.get_mapgen_setting("mg_name")
 
+-- DIMENSION code
+
+multidimensions={
+	start_y=4000,
+	max_distance=50, --(50 is 800)
+	max_distance_chatt=800,
+	limited_chat=true,
+	limeted_nametag=true,
+	remake_home=true,
+	remake_bed=true,
+	user={},
+	player_pos={},
+	earth = {
+		above=31000,
+		under=-31000,
+	},
+	craftable_teleporters=false,
+	registered_dimensions={},
+	first_dimensions_appear_at = 2000,
+	calculating_dimensions_from_min_y = 0,
+	map={
+		offset=0,
+		scale=1,
+		spread={x=100,y=18,z=100},
+		seeddiff=24,
+		octaves=5,
+		persist=0.7,
+		lacunarity=1,
+		flags="absvalue",
+	},
+}
+
+dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/api.lua")
+dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/dimensions.lua")
+--dofile(minetest.get_modpath(minetest.get_current_modname()) .. "/tools.lua") -- compatible
+
+-- PORTAL code
+
 local function destroy_portal(pos)
 	local neighbors = {
 		{ x=1, y=0, z=0 },
@@ -69,7 +107,7 @@ local ep_scheme_water = {
 	{ o={x=3, y=0, z=3}, p=0 },
 }
 
--- End portal
+-- portal node
 minetest.register_node("denseforest:portal_denseforest", {
 	description = S("Dense Forest Portal"),
 	_tt_help = S("Used to travel between normal and dense forest dimension"),
@@ -177,10 +215,56 @@ local function end_portal_area(pos, destroy)
 	minetest.bulk_set_node(posses, {name=name})
 end
 
+playerdimension = {}
+
+minetest.register_on_joinplayer(function(player)
+    local player_name = player:get_player_name()
+	--[[if get_variable(player_name) == nil then
+		save_variable(player_name, 1) -- the default dimension is earth
+	end]]--
+	
+	--if mod_storage == nil then mod_storage = minetest.get_mod_storage() end
+end)
+
+minetest.register_on_leaveplayer(function(player)
+    --local player_name = player:get_player_name()
+end)
+
+--save player dimensions
+
+-- Define a variable to store mod storage
+local mod_storage = nil
+
+-- Register an on_mods_loaded callback to initialize mod storage
+minetest.register_on_mods_loaded(function()
+    mod_storage = minetest.get_mod_storage()
+	if mod_storage ~= nil then
+		minetest.debug("mods loaded")
+	end
+end)
+
+-- Save a variable to mod storage
+function save_variable(player_name, value)
+    --local storage = minetest.get_mod_storage()
+    minetest.get_mod_storage():set_string("customdimension_" .. player_name, value)
+end
+
+-- Retrieve a variable from mod storage
+function get_variable(player_name)
+    --local storage = minetest.get_mod_storage()
+    return minetest.get_mod_storage():get_string("customdimension_" .. player_name)
+	--return nil
+end
+
 function end_portal_teleport(pos, node)
+	--minetest.debug("checking for entities...")
+	--if mod_storage == nil then return end
+	
 	for _,obj in pairs(minetest.get_objects_inside_radius(pos, 1)) do
 		local lua_entity = obj:get_luaentity() --maikerumine added for objects to travel
 		if obj:is_player() or lua_entity then
+			--minetest.debug("found potential entities")
+		
 			local objpos = obj:get_pos()
 			if objpos == nil then
 				return
@@ -191,11 +275,157 @@ function end_portal_teleport(pos, node)
 			if minetest.get_node(objpos).name ~= "denseforest:portal_denseforest" then
 				return
 			end
+			
+			--minetest.debug("checks passed")
 
-			denseforest.end_teleport(obj, objpos)
+			--this teleports the player
+			if obj:is_player() then
+				local name=obj:get_player_name()
+				multidimensions.user = multidimensions.user or {}
+				multidimensions.user[name]={}
+				multidimensions.user[name].pos=obj:get_pos()
+				multidimensions.user[name].object=obj
+				if multidimensions.user[name].currentdim == nil then
+					multidimensions.user[name].currentdim = 1
+				end		--default by default as weird as it may sound
+				local list = "earth"
+				local d = {"earth"}
+				for i, but in pairs(multidimensions.registered_dimensions) do
+					list = list .. ","..i
+					table.insert(d,i)
+				end
+				multidimensions.user[name].dims = d
+				local pos=multidimensions.user[name].pos
+				local object=multidimensions.user[name].object
+				local dims = multidimensions.user[name].dims
+				local dim = 2 --the dense forest dimension ID
+				
+				--if get_variable(name) == nil then
+					--save_variable(name, tostring(1)) -- the default dimension is earth
+				--end
+				
+				--dim = tonumber(get_variable(name))
+				--dim = 3 - dim
+				--save_variable(name, tostring(dim))
+				
+				if multidimensions.user[name].pos.y >= multidimensions.earth.above then
+					dim = 1
+				else
+					dim = 2
+				end
+				
+				--[[
+				if multidimensions.user[name].currentdim == 1 then
+					dim = 1
+					multidimensions.user[name].currentdim = 2
+				elseif multidimensions.user[name].currentdim == 2 then
+					dim = 2
+					multidimensions.user[name].currentdim = 1
+				end]]--
+				
+				--dim = 3 - tonumber(multidimensions.user[name].currentdim)
+				
+				--if dim == 1 then dim=2 end
+				
+				--minetest.debug(tostring(multidimensions.user[name].currentdim))
+				--minetest.debug("dim: " .. dim)
+				-- default is 1
+				--minetest.debug(dump(multidimensions.user[name].dims))
+				--minetest.debug(tostring(multidimensions.user[name].dim))
+				local pos=object:get_pos()
+				local d = multidimensions.registered_dimensions[dims[dim]]
+				if not d then
+					--multidimensions.user[name].currentdim=dim
+					move(object,{x=pos.x,y=0,z=pos.z})
+					if object:is_player() then
+						apply_dimension(object)
+					end
+				else
+					local pos2={x=pos.x,y=d.dirt_start+d.dirt_depth+1,z=pos.z}
+					if d and minetest.is_protected(pos2, name)==false then
+						--multidimensions.user[name].currentdim=dim
+						move(object,pos2)
+						if object:is_player() then
+							apply_dimension(object)
+						end
+					end
+				end
+				multidimensions.user[name]=nil
+			end
+			
+			--denseforest.end_teleport(obj, objpos)
 			--awards.unlock(obj:get_player_name(), "mcl:enterEndPortal")
 		end
 	end
+end
+
+function move(object,pos)
+	local move=false
+	object:set_pos(pos)
+	--multidimensions.setrespawn(object,pos)
+	minetest.after(1, function(pos,object,move)
+		for i=1,100,1 do
+			local nname=minetest.get_node(pos).name
+			if nname~="air" and nname~="ignore" then
+				pos.y=pos.y+1
+				move=true
+			elseif move then
+				object:set_pos(pos)
+				--multidimensions.setrespawn(object,pos)
+				break
+			end
+		end
+	end, pos,object,move)
+	minetest.after(5, function(pos,object,move)
+		for i=1,100,1 do
+			local nname=minetest.get_node(pos).name
+			if nname~="air" and nname~="ignore" then
+				pos.y=pos.y+1
+				move=true
+			elseif move then
+				object:set_pos(pos)
+				--multidimensions.setrespawn(object,pos)
+				break
+			end
+		end
+	end, pos,object,move)
+	return true
+end
+
+function apply_dimension(player)
+	local p = player:get_pos()
+	local name = player:get_player_name()
+	local pp = multidimensions.player_pos[name]
+	if pp and p.y > pp.y1 and p.y < pp.y2 then
+		--return
+	elseif pp then
+		local od = multidimensions.registered_dimensions[pp.name]
+		if od and od.on_leave then
+			od.on_leave(player)
+		end
+	end
+	for i, v in pairs(multidimensions.registered_dimensions) do
+		if p.y > v.dim_y and p.y < v.dim_y+v.dim_height then
+			multidimensions.player_pos[name] = {y1 = v.dim_y, y2 = v.dim_y+v.dim_height, name=i}
+			player:set_physics_override({gravity=v.gravity})
+			if v.sky then
+				player:set_sky(v.sky[1],v.sky[2],v.sky[3])
+			else
+				player:set_sky(nil,"regular",nil)
+			end
+			if v.on_enter then
+				v.on_enter(player)
+			end
+			return
+		end
+	end
+	player:set_physics_override({gravity=1})
+	player:set_sky(nil,"regular",nil)
+	multidimensions.player_pos[name] = {
+		y1 = multidimensions.earth.under,
+		y2 = multidimensions.earth.above,
+		name=""
+	}
 end
 
 function filter_positions_by_water(positions)
@@ -211,14 +441,13 @@ function filter_positions_by_water(positions)
     return filtered_positions
 end
 
---[[
 minetest.register_abm({
-	label = "End portal teleportation",
+	label = "Dense forest portal teleportation",
 	nodenames = {"denseforest:portal_denseforest"},
 	interval = 0.1,
 	chance = 1,
-	action = denseforest.end_portal_teleport,
-})]]--
+	action = end_portal_teleport,
+})
 
 local rotate_frame, rotate_frame_eye
 
@@ -232,7 +461,7 @@ local function on_node_placement(pos, node, placer, itemstack, pointed_thing)
 
     -- Your custom code goes here
     -- This function will be called every time a player places a node
-	minetest.debug("h: " .. tostring(node.name))
+	--minetest.debug("h: " .. tostring(node.name))
     -- Example: Print a message to the server console
     --minetest.log("action", "Player " .. placer:get_player_name() .. " placed a node at " .. minetest.pos_to_string(pos))
 	if node.name == "mcl_core:podzol" then
@@ -270,3 +499,6 @@ end
 --if has_doc then
 	--doc.add_entry_alias("nodes", "denseforest:end_portal_frame", "nodes", "denseforest:end_portal_frame_eye")
 --end
+
+-- DIMENSION TRAVEL code
+
