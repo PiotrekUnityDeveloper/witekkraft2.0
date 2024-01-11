@@ -1,0 +1,9 @@
+# textdomain: mcl_breakers
+Placer=
+A placer is a block which acts as a redstone component which, when powered with redstone power, places a block. It has a container with 9 inventory slots.=
+Place the placer in one of 6 possible directions. The “hole” is where the placer will place from. Use the placer to access its inventory. Insert the blocks you wish to use. Supply the placer with redstone energy to place a block.=
+Downwards-Facing Placer=
+Upwards-Facing Placer=
+Inventory=
+9 inventory slots=
+Places a block if available=

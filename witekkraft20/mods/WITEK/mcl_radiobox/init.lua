@@ -207,7 +207,7 @@ end
 minetest.register_node("mcl_radiobox:radiobox", {
 	description = S("Walkman Radio"),
 	_tt_help = S("Gets local transmission and converts it to audio"),
-	_doc_items_longdesc = S("This device needs batteries to function correctly"),
+	_doc_items_longdesc = S("This device needs active redstone signal"),
 	_doc_items_usagehelp = S("Click the radio block with right mouse button to toggle it's enabled state"),
 	tiles = {
         "radio_texture_top.png",    -- Top

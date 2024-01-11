@@ -1,0 +1,9 @@
+# textdomain: mcl_breakers
+Breaker=
+A breaker is a block which acts as a redstone component which, when powered with redstone power, breaks a block. It has a container with 4 inventory slots.=
+Place the breaker in one of 6 possible directions. The “hole” is where the breaker will break from. Use the breaker to access its inventory. Insert the tools you wish to use. Supply the breaker with redstone energy to use the tools on a block.=
+Downwards-Facing Breaker=
+Upwards-Facing Breaker=
+Inventory=
+4 inventory slots=
+Breaks a block with available tools.=
