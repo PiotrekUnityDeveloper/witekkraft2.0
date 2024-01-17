@@ -1,0 +1,11 @@
+# If enabled, exporting a schematic will also create a .lua file
+# in addition to the .mts file.
+schemedit_export_lua (.lua file schematic export) bool false
+
+# Specify the style of the visual border markers.
+# * edges: Show borders at the edges
+# * checkers: Checker pattern at the sides
+schemedit_border_style (Border style) enum edges edges,checkers
+
+# If enabled, the Northern border marker will be brighter.
+schemedit_highlight_north (Highlight Northern border) bool true
