@@ -285,13 +285,13 @@ function creatura.register_abm_spawn(mob, def)
 			local offset
 			local spawn_pos
 			for _ = 1, group_size do
-				offset = ceil(mob_width)
+				offset = 1
 				spawn_pos = creatura.get_ground_level({
 					x = pos.x + random(-offset, offset),
 					y = pos.y,
 					z = pos.z + random(-offset, offset)
 				}, 3)
-				if not can_spawn(spawn_pos, mob_width, mob_height) then
+				if not can_spawn(spawn_pos, 1, 1) then
 					spawn_pos = pos
 				end
 				obj = minetest.add_entity(spawn_pos, mob)

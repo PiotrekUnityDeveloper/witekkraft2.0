@@ -40,8 +40,8 @@ local cherry_particle = {
 minetest.register_abm({
 	label = "Cherry Blossom Particles",
 	nodenames = {"mcl_cherry_blossom:cherryleaves"},
-	interval = 1,
-	chance = 10,
+	interval = 5,
+	chance = 6,
 	action = function(pos, node)
 		minetest.after(math.random(0.1,1.5),function()
 			local pt = table.copy(cherry_particle)
