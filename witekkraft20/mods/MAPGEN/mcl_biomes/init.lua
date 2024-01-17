@@ -27,6 +27,7 @@ local mod_mcl_mushrooms = minetest.get_modpath("mcl_mushrooms")
 local mod_mcl_crimson = minetest.get_modpath("mcl_crimson")
 local mod_mcl_blackstone = minetest.get_modpath("mcl_blackstone")
 local mod_mcl_mangrove = minetest.get_modpath("mcl_mangrove")
+local mod_cherry_blossom = minetest.get_modpath("mcl_cherry_blossom")
 
 local deco_id_chorus_plant
 
@@ -118,6 +119,7 @@ local function register_biomes()
 		"IcePlains",
 		"IcePlainsSpikes",
 		"ColdTaiga",
+		"CherryGrove",
 		"ExtremeHills",
 		"ExtremeHillsM",
 		"ExtremeHills+",
@@ -2135,10 +2137,33 @@ local function register_biomes()
 		_mcl_skycolor = ocean_skycolor,
 		_mcl_fogcolor = overworld_fogcolor
 	})
+	
+	--other
+	minetest.register_biome({
+		name = "CherryGrove",
+		node_top = "mcl_core:dirt_with_grass",
+		depth_top = 1,
+		node_filler = "mcl_core:dirt",
+		depth_filler = 2,
+		node_riverbed = "mcl_core:sand",
+		depth_riverbed = 2,
+		y_min = 18,
+		y_max = mcl_vars.mg_overworld_max,
+		humidity_point = 41,
+		heat_point = 55,
+		_mcl_biome_type = "medium",
+		_mcl_palette_index = 11,
+		_mcl_skycolor = "#78A7FF",
+		_mcl_fogcolor = overworld_fogcolor
+	})
 
 	-- Add deep ocean and underground biomes automatically.
 	for i = 1, #overworld_biomes do
 		local biome = overworld_biomes[i]
+		
+		if biome == "CherryGrove" then
+			goto continue
+		end
 
 		-- Deep Ocean
 		minetest.register_biome({
@@ -2177,8 +2202,53 @@ local function register_biomes()
 			_mcl_skycolor = minetest.registered_biomes[biome]._mcl_skycolor,
 			_mcl_fogcolor = minetest.registered_biomes[biome]._mcl_fogcolor,
 		})
+		
+		::continue::
 
 	end
+	
+	-- Cherry
+	for i=1,5 do
+		minetest.register_decoration({
+			deco_type = "schematic",
+			place_on = {"mcl_core:dirt_with_grass"},
+			sidelen = 80,
+			noise_params = {
+				offset = 0.007,
+				scale = 0.08,
+				spread = {x = 250, y = 250, z = 250},
+				seed = 13+i,
+				octaves = 3,
+				persist = 0.6
+			},
+			biomes = {"CherryGrove"},
+			y_min = 1,
+			y_max = mcl_vars.mg_overworld_max,
+			schematic = mod_cherry_blossom.."/schematics/mcl_cherry_blossom_tree_"..i..".mts",
+			flags = "place_center_x, place_center_z",
+			rotation = "random",
+		})
+		minetest.register_decoration({
+			deco_type = "schematic",
+			place_on = {"mcl_core:dirt_with_grass"},
+			sidelen = 80,
+			noise_params = {
+				offset = 0.0005,
+				scale = 0.0001,
+				spread = {x = 250, y = 250, z = 250},
+				seed = 32+i,
+				octaves = 3,
+				persist = 0.01
+			},
+			biomes = {"CherryGrove"},
+			y_min = 1,
+			y_max = mcl_vars.mg_overworld_max,
+			schematic = mod_cherry_blossom.."/schematics/mcl_cherry_blossom_tree_beehive_"..i..".mts",
+			flags = "place_center_x, place_center_z",
+			rotation = "random",
+		})
+	end
+
 end
 
 -- Register biomes of non-Overworld biomes
@@ -4706,7 +4776,7 @@ local function register_decorations()
 			octaves = 3,
 			persist = 0.7,
 		},
-		biomes = {"Swampland", "Swampland_shore"},
+		biomes = {"Swampland", "Swampland_shore", "CherryGrove"},
 		y_min = 1,
 		y_max = mcl_vars.mg_overworld_max,
 		decoration = "mcl_core:reeds",
@@ -4714,6 +4784,15 @@ local function register_decorations()
 		height_max = 3,
 		spawn_by = {"mcl_core:water_source", "group:frosted_ice"},
 		num_spawn_by = 1,
+	})
+	minetest.register_decoration({
+		deco_type = "simple",
+		place_on = {"mcl_core:dirt_with_grass"},
+		fill_ratio = 0.6,
+		biomes = {"CherryGrove"},
+		y_min = mcl_vars.mg_overworld_min,
+		y_max = mcl_vars.mg_overworld_max,
+		decoration = "mcl_cherry_blossom:pink_petals",
 	})
 
 	-- Doubletall grass
@@ -5265,7 +5344,7 @@ local function register_decorations()
 	-- Grasses and ferns
 	local grass_forest = {"Plains", "Taiga", "Forest", "FlowerForest", "BirchForest", "BirchForestM", "RoofedForest", "Swampland", }
 	local grass_mpf = {"MesaPlateauF_grasstop"}
-	local grass_plains = {"Plains", "SunflowerPlains", "JungleEdge", "JungleEdgeM", "MangroveSwamp"}
+	local grass_plains = {"Plains", "SunflowerPlains", "JungleEdge", "JungleEdgeM", "MangroveSwamp", "CherryGrove"}
 	local grass_savanna = {"Savanna", "SavannaM"}
 	local grass_sparse = {"ExtremeHills", "ExtremeHills+", "ExtremeHills+_snowtop", "ExtremeHillsM", "Jungle"}
 	local grass_mpfm = {"MesaPlateauFM_grasstop"}

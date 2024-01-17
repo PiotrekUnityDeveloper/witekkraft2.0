@@ -33,14 +33,14 @@ local cherry_particle = {
 	size = math.random(1.3,2.5),
 	texture = "mcl_cherry_blossom_particle.png",
 	collision_removal = false,
-	collisiondetection = false,
+	collisiondetection = true,
 }
 
 
 minetest.register_abm({
 	label = "Cherry Blossom Particles",
 	nodenames = {"mcl_cherry_blossom:cherryleaves"},
-	interval = 5,
+	interval = 1,
 	chance = 10,
 	action = function(pos, node)
 		minetest.after(math.random(0.1,1.5),function()
