@@ -12,30 +12,20 @@ local recharge_items = {
 local function wear_item_by_time(itemstack, total_time, dtime)
     local wear = itemstack:get_wear()
     local to_add = (FULLWEAR / total_time) * dtime
-    wear = wear + to_add
-    itemstack:set_wear(math.max(math.min(FULLWEAR-1, wear), 0)) -- don't destroy the item
+    wear = wear + (to_add / 4)
+    itemstack:set_wear(math.max(math.min(FULLWEAR, wear), 0)) -- don't destroy the item
+	
+	if wear > FULLWEAR - 5 then
+		--destroy item
+	end
+	
     return itemstack
 end
 local function start_recharge(player)
     pl[player] = {recharging=true}
 end
 local function recharge(player, dtime)
-    local inv = player:get_inventory()
-    if not inv then return end
-    local charged = false
-    for i=1, inv:get_size("main") do
-        local stack = inv:get_stack("main", i)
-        if recharge_items[stack:get_name()] and recharge_items[stack:get_name()].time
-        and recharge_items[stack:get_name()].time < 0 then
-            stack = wear_item_by_time(stack, recharge_items[stack:get_name()].time, dtime)
-            if stack:get_name() == "flashlight:flashlight_on" and player:get_wield_index() ~= i then
-                stack:set_name("flashlight:flashlight")
-            end
-            inv:set_stack("main", i, stack)
-            charged = true
-        end
-    end
-    return charged
+
 end
 
 minetest.register_globalstep(function(dtime)
