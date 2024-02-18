@@ -56,6 +56,8 @@ local function can_spawn(pos, width, height)
 end
 
 local function do_on_spawn(pos, obj)
+	if obj == nil then return end
+	if obj:get_luaentity().name == nil then return end
 	local name = obj and obj:get_luaentity().name
 	if not name then return end
 	local spawn_functions = creatura.registered_on_spawns[name] or {}

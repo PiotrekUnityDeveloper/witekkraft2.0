@@ -92,23 +92,6 @@ creatura.register_abm_spawn("animalia:owl", {
 
 
 
-
--- Ambient Spawning
-
-creatura.register_abm_spawn("animalia:bat", {
-	chance = ambient_spawn_chance,
-	interval = 30,
-	min_light = 0,
-	min_height = -31000,
-	max_height = 1,
-	min_group = 3,
-	max_group = 5,
-	spawn_cap = 6,
-	nodes = {"group:stone"}
-})
-
-
-
 creatura.register_abm_spawn("animalia:frog", {
 	chance = ambient_spawn_chance * 0.75,
 	interval = 60,
