@@ -776,7 +776,7 @@ dofile(modpath.."/skills.lua")
 --dofile(modpath.."/misc.lua")
 dofile(modpath.."/bullet_knockback.lua")
 dofile(modpath.."/ammo.lua")
---dofile(modpath.."/crafting.lua") --todo the craftings
+dofile(modpath.."/crafting.lua") --todo the craftings
 
 if rweapons_shurikens == "true" then
 	dofile(modpath.."/shurikens.lua")

@@ -2,17 +2,7 @@ local shared = {}
 shared.decalLifetime = tonumber(minetest.settings:get("blood_splatter.decalLifetime")) or 300
 
 
-local function dependency_version_error(mod_title)
-    error(
-        '\n' ..
-        'blood_splatter\n' ..
-        "────────────────────────────────────────────────────────────────────────────────────────────────────\n" ..
-        'You have an outdated version of the mod "' .. mod_title .. '" installed. ' ..
-        'Please go to "Content" → "Browse online content" and update the mod "' .. mod_title .. '".\n' ..
-        "────────────────────────────────────────────────────────────────────────────────────────────────────\n",
-        0
-    )
-end
+
 if not modlib.version or modlib.version < 102 then
     dependency_version_error("Modding Library")
 end

@@ -6,17 +6,8 @@ minetest.register_craft({
 	output = "rangedweapons:aa12",
 	recipe = {
 		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "rangedweapons:aa12",
-	recipe = {
-		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
+		{"mcl_core:ironblock", "mcl_core:ironblock", "mcl_core:ironblock"},
+		{"", "mcl_copper:block", "mcl_core:ironblock"},
 	}
 })
 
@@ -51,8 +42,8 @@ minetest.register_craft({
 	output = "rangedweapons:beretta",
 	recipe = {
 		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
+		{"mcl_core:iron_ingot", "mcl_core:iron_ingot", "mcl_core:flint"},
+		{"", "", "mcl_nether:netherbrick"},
 	}
 })
 
@@ -69,8 +60,8 @@ minetest.register_craft({
 	output = "rangedweapons:deagle",
 	recipe = {
 		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
+		{"mcl_core:ironblock", "mcl_core:ironblock", "mcl_core:ironblock"},
+		{"", "", "mcl_core:ironblock"},
 	}
 })
 minetest.register_craft({
@@ -83,42 +74,16 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "rangedweapons:deagle",
-	recipe = {
-		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
-	}
-})
-
-minetest.register_craft({
 	output = "rangedweapons:python",
 	recipe = {
 		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
-	}
-})
-minetest.register_craft({
-	output = "rangedweapons:python",
-	recipe = {
-		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
+		{"mcl_core:iron_ingot", "mcl_core:ironblock", "mcl_copper:copper_ingot"},
+		{"", "", "mcl_copper:copper_ingot"},
 	}
 })
 
 minetest.register_craft({
 	output = "rangedweapons:g36",
-	recipe = {
-		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "",
 	recipe = {
 		{"", "", ""},
 		{"", "", ""},
@@ -157,6 +122,15 @@ minetest.register_craft({
 	output = "rangedweapons:m200",
 	recipe = {
 		{"", "", ""},
+		{"mcl_core:ironblock", "mcl_core:ironblock", "mcl_core:flint"},
+		{"", "", "mcl_core:flint"},
+	}
+})
+
+minetest.register_craft({
+	output = "rangedweapons:glock17",
+	recipe = {
+		{"", "", ""},
 		{"", "", ""},
 		{"", "", ""},
 	}
@@ -166,8 +140,8 @@ minetest.register_craft({
 	output = "rangedweapons:makarov",
 	recipe = {
 		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
+		{"", "mcl_core:iron_ingot", "mcl_core:iron_ingot"},
+		{"", "", "mcl_copper:copper_ingot"},
 	}
 })
 
@@ -266,17 +240,8 @@ minetest.register_craft({
 	output = "rangedweapons:taurus",
 	recipe = {
 		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "rangedweapons:taurus",
-	recipe = {
-		{"", "", ""},
-		{"", "", ""},
-		{"", "", ""},
+		{"mcl_core:iron_ingot", "mcl_core:ironblock", "mcl_core:flint"},
+		{"", "", "mcl_core:flint"},
 	}
 })
 
@@ -483,26 +448,11 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "",
-	recipe = {
-		{"", "mineclone:tin_ingot", "mineclone:coal_lump"},
-	}
-})
-
-minetest.register_craft({
 	output = "rangedweapons:ultra_gunsteel_ingot",
 	recipe = {
 		{"", "", ""},
 		{"mineclone:gold_ingot", "", "mineclone:gold_ingot"},
 		{"", "", ""},
-	}
-})
-
-minetest.register_craft({
-	output = "",
-	recipe = {
-		{"", "mineclone:coal_lump", ""},
-		{"mineclone:coal_lump", "", "mineclone:coal_lump"},
 	}
 })
 
